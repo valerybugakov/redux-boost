@@ -1,0 +1,58 @@
+{
+  "name": "redux-boost",
+  "version": "0.0.1",
+  "license": "MIT",
+  "engine": "node >= 6.5.x",
+  "main": "dist/index.js",
+  "description": "boost",
+  "author": "Valery Bugakov",
+  "scripts": {
+    "lint": "eslint src test",
+    "clean": "rimraf dist/",
+    "build": "rimraf dist/ && babel src/ --out-dir dist/",
+    "test": "npx jest",
+    "check": "npx npm-check -u",
+    "example": "node example.js",
+    "prepare": "npm run clean && npm run lint && npm run test && npm run build",
+    "pub": "npx np || true"
+  },
+  "contributors": [
+    {
+      "name": "Valery Bugakov",
+      "email": "valerybugakov@gmail.com"
+    }
+  ],
+  "homepage": "https://github.com/valerybugakov/redux-boost#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valerybugakov/redux-boost.git"
+  },
+  "bugs": {
+    "url": "https://github.com/valerybugakov/redux-boost/issues"
+  },
+  "keywords": [
+    "redux"
+  ],
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-eslint": "8.0.1",
+    "babel-jest": "21.2.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "1.6.1",
+    "eslint": "4.10.0",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-react": "7.4.0",
+    "jest": "^21.2.1",
+    "np": "2.16.1",
+    "npm-check": "5.4.5",
+    "rimraf": "2.6.2",
+    "run-sequence": "2.2.0"
+  },
+  "prettier": {
+    "singleQuote": true
+  }
+}
