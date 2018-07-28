@@ -23,12 +23,15 @@ export const createRequestMiddleware = config => ({ dispatch }) =>
         method = config.method || 'get',
         serialize = config.serialize || identity,
         executor = config.executor || global.fetch,
+        prepareExecutor = config.prepareExecutor || function applyMethod() {
+          return executor.get ? executor[method.toLowerCase()] : executor
+        },
       } = {},
       meta: { resolve = noop, reject = noop } = {},
     } = action
 
     const args = Array.isArray(payload) ? payload : [payload]
-    const fetch = executor.get ? executor[method.toLowerCase()] : executor
+    const fetch = prepareExecutor(executor, action.payload)
 
     try {
       const response = await fetch(...args)
