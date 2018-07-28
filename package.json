@@ -1,6 +1,6 @@
 {
   "name": "redux-boost",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "license": "MIT",
   "engine": "node >= 6.5.x",
   "main": "dist/index.js",
@@ -40,6 +40,7 @@
     "babel-jest": "21.2.0",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
     "eslint": "4.10.0",
@@ -55,20 +56,19 @@
     "run-sequence": "2.2.0"
   },
   "peerDependencies": {
-    "reselect": ">=0.0.1",
-    "redux": ">=3.6.0",
-    "redux-yo": ">=0.0.1",
+    "immutability-helper": ">=0.0.1",
     "prop-types": ">=15.0.0",
     "react": ">=15.0.0",
     "react-dom": ">=15.0.0",
-    "immutability-helper": ">=0.0.1"
+    "redux": ">=3.6.0",
+    "redux-yo": ">=0.0.1",
+    "reselect": ">=0.0.1"
   },
   "optionalDependencies": {
-    "redux-logger": ">=0.0.1",
-    "redux-saga": ">=0.0.1",
     "event-filter-redux-middleware": ">=0.0.1",
-    "redux-saga": ">=0.0.1",
-    "redux-persist": ">=0.0.1"
+    "redux-logger": ">=0.0.1",
+    "redux-persist": ">=0.0.1",
+    "redux-saga": ">=0.0.1"
   },
   "prettier": {
     "singleQuote": true
