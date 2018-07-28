@@ -15,6 +15,14 @@
     "no-param-reassign": ['error', { 'props': false }],
     "one-var": [0, { "uninitialized": "always", "initialized": "never" }],
     "one-var-declaration-per-line": 0,
+    "global-require": 0,
+
+    "react/prop-types": 0,
+    "react/jsx-filename-extension": 0,
+
+    "import/no-unresolved": 0,
     "import/extensions": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0
   }
 }

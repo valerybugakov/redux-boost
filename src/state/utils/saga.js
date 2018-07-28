@@ -17,7 +17,7 @@ export function createSaga(name, saga) {
 export function dedupeEvery(pattern, saga) {
   const inProgress = {};
 
-  return fork(function* () {
+  return fork(function* dedupe() {
     while (true) {
       const action = yield take(pattern);
 

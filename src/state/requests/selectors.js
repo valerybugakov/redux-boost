@@ -1,4 +1,4 @@
-import { get } from 'lodash'
+import get from 'lodash.get'
 import { createSelector } from 'reselect'
 
 export const getOperationName = (_, { operation } = {}) => operation
