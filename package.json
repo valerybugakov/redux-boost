@@ -1,6 +1,6 @@
 {
   "name": "redux-boost",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "license": "MIT",
   "engine": "node >= 6.5.x",
   "main": "dist/index.js",
