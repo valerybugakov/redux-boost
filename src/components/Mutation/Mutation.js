@@ -2,7 +2,7 @@ import { Component } from 'react'
 import PropTypes from 'prop-types'
 import { merge } from 'lodash'
 
-import { requestActions } from 'state/requests/actions'
+import { requestActions } from '../../state/requests/actions'
 
 export class RestMutation extends Component {
   static contextTypes = {

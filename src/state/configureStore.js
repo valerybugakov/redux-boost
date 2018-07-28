@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import { isDev } from 'utils/env'
+import { isDev } from '../utils/env'
 
 let sagaMiddleware
 

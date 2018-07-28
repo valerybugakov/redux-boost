@@ -1,6 +1,6 @@
 import { createReducer } from 'redux-yo'
-import { update } from 'state/utils'
-import { requestActions } from 'state/requests/actions'
+import { update } from '../utils'
+import { requestActions } from '../requests/actions'
 
 import { dataActions } from './actions'
 

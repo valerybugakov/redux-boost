@@ -1,5 +1,5 @@
 import { createReducer } from 'redux-yo'
-import { update, merge } from 'state/utils'
+import { update, merge } from '../utils'
 import { requestActions } from './actions'
 
 const initialState = {

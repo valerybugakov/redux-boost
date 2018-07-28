@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { requestActions } from 'state/requests/actions'
+import { requestActions } from '../../state/requests/actions'
 
 export class RestQuery extends Component {
   static contextTypes = {
