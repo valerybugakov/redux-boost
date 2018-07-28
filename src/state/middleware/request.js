@@ -12,7 +12,7 @@ import { noop, identity } from '../utils'
  */
 export const createRequestMiddleware = config => ({ dispatch }) =>
   next => async action => {
-    if (!action.type === requestActions.fetchStart.type) {
+    if (action.type !== requestActions.fetchStart.type) {
       return next(action)
     }
 
