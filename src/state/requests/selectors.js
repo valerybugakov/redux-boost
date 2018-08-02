@@ -15,6 +15,11 @@ export const getResult = createSelector(
   (requests, operation) => get(requests, `${operation}.result`)
 )
 
+export const getError = createSelector(
+  [getRequests, getOperationName],
+  (requests, operation) => get(requests, `${operation}.error`)
+)
+
 export const getIsLoading = createSelector(
   [getRequests, getOperationName],
   (requests, operation) => get(requests, `${operation}.loading`)
