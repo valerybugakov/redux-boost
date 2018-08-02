@@ -4,8 +4,8 @@ Save me from Redux anxiety!
 
 ### TODO:
 
-[ ] Add API reference
-[ ] Add interactive example
+- [ ] Add API reference
+- [ ] Add interactive example
 
 ```js
 /* eslint-disable */
