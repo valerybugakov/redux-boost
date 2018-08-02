@@ -2,10 +2,14 @@
 
 Save me from Redux anxiety!
 
-### TODO:
+## TODO:
 
 - [ ] Add API reference
 - [ ] Add interactive example
+
+## Usage
+
+### Store configuration
 
 ```js
 /* eslint-disable */
@@ -52,12 +56,15 @@ const { store, persistor } = createStore({
 // If store is not created by redux-boost
 // `boostStore` call is required to enable binded `fetchStart` action
 boostStore(store)
+```
 
+### React integration:
 
+```js
 // Connect component to redux-store and provide mutation props
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { getResponse, restMutation } from 'redux-boost'
+import { getResponse, restMutation, restQuery } from 'redux-boost'
 
 import exampleSaga from 'modules/sagas/exampleSaga'
 
