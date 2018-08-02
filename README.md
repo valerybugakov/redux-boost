@@ -60,8 +60,15 @@ boostStore(store)
 
 ### React integration:
 
+`restQuery` — HOC for `GET` requests.
+
+`restMutation` – HOC for other types of requests.
+
+API is similar to [React-Apollo](https://github.com/apollographql/react-apollo) library. 
+
+First wrap React component into HOC to receive desired functionality.
+
 ```js
-// Connect component to redux-store and provide mutation props
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { getResponse, restMutation, restQuery } from 'redux-boost'
@@ -103,7 +110,11 @@ export default compose(
     }),
   })
 )(ExampleComponent)
+```
 
+Then use provided props to send mutation request and display queried data.
+
+```js
 // In React component use mutation name to access passed properties
 import React, { Component } from 'react'
 
