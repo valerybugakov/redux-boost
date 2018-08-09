@@ -32,28 +32,6 @@ function enhanceWith(middlewareArray = [], options) {
   return composeEnhancers(...enhancers)(createStore)
 }
 
-const collectMiddlewares = flags =>
-  Object.keys(flags).filter(key => flags[key]).map(key => {
-    switch (key) {
-      case 'saga': {
-        const createSagaMiddleware = require('redux-saga').default
-
-        sagaMiddleware =
-          typeof createSagaMiddleware === 'function'
-          ? createSagaMiddleware()
-          : createSagaMiddleware.default()
-
-        return sagaMiddleware
-      }
-      case 'eventFilter':
-        return require('event-filter-redux-middleware').default
-      case 'thunk':
-        return require('redux-thunk').default
-      default:
-        throw new Error(`Invalid middlware name: ${key}`)
-    }
-  })
-
 export default function configureStore(options) {
   const {
     initialState = {},
@@ -61,11 +39,7 @@ export default function configureStore(options) {
     getReducer,
   } = options
 
-  const enhancements = Array.isArray(middlewares)
-    ? middlewares
-    : collectMiddlewares(middlewares)
-
-  const createStoreWithMiddleware = enhanceWith(enhancements, options)
+  const createStoreWithMiddleware = enhanceWith(middlewares, options)
 
   const store = createStoreWithMiddleware(getReducer(), initialState)
 
