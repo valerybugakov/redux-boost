@@ -33,11 +33,7 @@ function enhanceWith(middlewareArray = [], options) {
 }
 
 export default function configureStore(options) {
-  const {
-    initialState = {},
-    middlewares,
-    getReducer,
-  } = options
+  const { initialState = {}, middlewares, getReducer } = options
 
   const createStoreWithMiddleware = enhanceWith(middlewares, options)
 

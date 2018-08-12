@@ -1,8 +1,8 @@
-import { createActions } from 'redux-yo';
-import { takeLatest, take, fork, cancel } from 'redux-saga/effects';
+import { createActions } from 'redux-yo'
+import { takeLatest, take, fork, cancel } from 'redux-saga/effects'
 
 export function createSaga(name, saga) {
-  const actions = createActions(['sagaStart', 'sagaSuccess', 'sagaFail'], name);
+  const actions = createActions(['sagaStart', 'sagaSuccess', 'sagaFail'], name)
 
   return {
     name,
@@ -11,29 +11,29 @@ export function createSaga(name, saga) {
     saga,
     listener: takeLatest(actions.sagaStart, saga),
     ...actions,
-  };
+  }
 }
 
 export function dedupeEvery(pattern, saga) {
-  const inProgress = {};
+  const inProgress = {}
 
   return fork(function* dedupe() {
     while (true) {
-      const action = yield take(pattern);
+      const action = yield take(pattern)
 
-      const { name, deduplicate } = action.payload;
+      const { name, deduplicate } = action.payload
 
       if (inProgress[name] && deduplicate) {
-        yield cancel(inProgress[name]);
+        yield cancel(inProgress[name])
       }
 
-      const task = yield fork(saga, action);
+      const task = yield fork(saga, action)
 
-      inProgress[name] = task;
+      inProgress[name] = task
 
       task.done
         .then(() => delete inProgress[name])
-        .catch(() => delete inProgress[name]);
+        .catch(() => delete inProgress[name])
     }
-  });
+  })
 }

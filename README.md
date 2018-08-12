@@ -52,7 +52,6 @@ const { store, persistor } = createStore({
   // ],
 })
 
-
 // If store is not created by redux-boost
 // `boostStore` call is required to enable binded `fetchStart` action
 boostStore(store)
@@ -64,7 +63,7 @@ boostStore(store)
 
 `restMutation` – HOC for other types of requests.
 
-API is similar to [React-Apollo](https://github.com/apollographql/react-apollo) library. 
+API is similar to [React-Apollo](https://github.com/apollographql/react-apollo) library.
 
 First wrap React component into HOC to receive desired functionality.
 
@@ -103,7 +102,7 @@ export default compose(
     ...exampleSaga,
 
     // Will be passed to the executor as a request params
-    options: ({ foo, bar, }) => ({
+    options: ({ foo, bar }) => ({
       foo: foo.toUpperCase(),
       bar,
       constant: 1,
@@ -132,12 +131,7 @@ class ExampleComponent extends Component {
   render() {
     const {
       requiredData,
-      exampleSaga: {
-        loading,
-        mutate,
-        result,
-        error,
-      },
+      exampleSaga: { loading, mutate, result, error },
     } = this.props
 
     if (requiredData.loading) {
@@ -155,5 +149,4 @@ class ExampleComponent extends Component {
     )
   }
 }
-
 ```

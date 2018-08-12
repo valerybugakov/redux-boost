@@ -10,4 +10,5 @@ export const getEntitiesObject = createSelector(
 )
 
 export const getEntities = createSelector([getEntitiesObject], entities =>
-  Object.values(entities))
+  Object.values(entities)
+)

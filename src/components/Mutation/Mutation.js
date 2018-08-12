@@ -59,9 +59,7 @@ export class RestMutation extends Component {
 
         // Handy to use with thunks
         if (requestAction.then) {
-          requestAction
-            .then(resp => resolve(resp))
-            .catch(err => reject(err))
+          requestAction.then(resp => resolve(resp)).catch(err => reject(err))
         }
 
         return store.dispatch(requestAction)

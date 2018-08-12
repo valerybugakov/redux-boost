@@ -38,11 +38,9 @@ const { store, persistor } = createStore({
   // ],
 })
 
-
 // If store is not created by redux-boost
 // `boostStore` call is required to enable binded `fetchStart` action
 boostStore(store)
-
 
 // Connect component to redux-store and provide mutation props
 import { compose } from 'redux'
@@ -79,7 +77,7 @@ export default compose(
     ...exampleSaga,
 
     // Will be passed to the executor as a request params
-    options: ({ foo, bar, }) => ({
+    options: ({ foo, bar }) => ({
       foo: foo.toUpperCase(),
       bar,
       constant: 1,
@@ -104,12 +102,7 @@ class ExampleComponent extends Component {
   render() {
     const {
       requiredData,
-      exampleSaga: {
-        loading,
-        mutate,
-        result,
-        error,
-      },
+      exampleSaga: { loading, mutate, result, error },
     } = this.props
 
     if (requiredData.loading) {

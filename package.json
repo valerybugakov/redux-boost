@@ -98,9 +98,10 @@
     "redux-saga": ">=0.0.1"
   },
   "prettier": {
+    "semi": false,
     "singleQuote": true,
     "bracketSpacing": true,
-    "trailingComma": true
+    "trailingComma": "es5"
   },
   "jest": {
     "collectCoverage": true
