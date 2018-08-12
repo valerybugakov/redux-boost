@@ -22,7 +22,8 @@ export class RestMutation extends Component {
     loading: false,
     error: undefined,
     result: undefined,
-    networkStatus: 'string',
+    // TODO: implement networkStatus updates
+    // networkStatus: 'string',
   }
 
   componentDidMount() {

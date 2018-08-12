@@ -5,4 +5,5 @@ lib
 dist
 .idea
 *.log
+*.DS_Store
 package-lock.json

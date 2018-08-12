@@ -18,10 +18,14 @@ export class RestQuery extends Component {
   hasMounted = false
 
   state = {
-    loading: true,
+    loading:
+      typeof this.props.shouldSkip !== 'undefined'
+        ? this.props.shouldSkip
+        : true,
     error: undefined,
     result: undefined,
-    networkStatus: 'string',
+    // TODO: implement networkStatus updates
+    // networkStatus: 'string',
   }
 
   componentDidMount() {
