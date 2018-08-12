@@ -6,8 +6,6 @@ import Loader from '../../shared/Loader'
 import CommitList from './CommitList'
 
 export default restQuery({
-  name: 'getCommits',
-  action: getCommits,
+  ...getCommits,
   placeholder: Loader,
-  options: ({ userName, repo }) => ({ userName, repo }),
 })(CommitList)

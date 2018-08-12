@@ -1,5 +1,5 @@
 const apiUrl = path =>
-  `https://api.github.com/${path}access_token=78a76d64b44bd76f5c568cdc78178fa4eb4f0252`
+  `https://api.github.com/${path}access_token=3886b49a2e14a3bbb9f75b2a00211de53268729d`
 
 export const getUser = {
   name: 'getUser',
