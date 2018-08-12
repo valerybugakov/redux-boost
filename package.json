@@ -1,6 +1,6 @@
 {
   "name": "redux-boost",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "license": "MIT",
   "description": "Redux-Boost",
   "main": "lib/index.js",

@@ -20,7 +20,7 @@ export class RestQuery extends Component {
   state = {
     loading:
       typeof this.props.shouldSkip !== 'undefined'
-        ? this.props.shouldSkip
+        ? !this.props.shouldSkip
         : true,
     error: undefined,
     result: undefined,
