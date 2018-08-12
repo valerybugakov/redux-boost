@@ -16,13 +16,29 @@
       "presets": [
         "env",
         "react"
-      ]
+      ],
+      "plugins": [
+        "transform-class-properties",
+        "transform-object-rest-spread",
+        ["transform-runtime", {
+          "polyfill": false,
+          "regenerator": true
+        }]
+      ],
     },
     "test": {
       "presets": [
         "env",
         "react"
-      ]
+      ],
+      "plugins": [
+        "transform-class-properties",
+        "transform-object-rest-spread",
+        ["transform-runtime", {
+          "polyfill": false,
+          "regenerator": true
+        }]
+      ],
     }
   }
 }

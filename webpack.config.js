@@ -1,8 +1,8 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require('path')
+const webpack = require('webpack')
 
-const { NODE_ENV } = process.env;
-const production = NODE_ENV === 'production';
+const { NODE_ENV } = process.env
+const production = NODE_ENV === 'production'
 
 module.exports = {
   entry: path.join(__dirname, 'src/index.js'),
@@ -27,4 +27,9 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
     }),
   ],
-};
+  externals: {
+    react: 'react',
+    redux: 'redux',
+    reselect: 'reselect',
+  },
+}
