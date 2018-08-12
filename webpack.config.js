@@ -8,7 +8,7 @@ module.exports = {
   entry: path.join(__dirname, 'src/index.js'),
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: `redux-boost{production ? '.min' : ''}.js`,
+    filename: `redux-boost${production ? '.min' : ''}.js`,
     library: 'ReduxBoost',
     libraryTarget: 'umd',
   },
