@@ -3,9 +3,12 @@ import { noop, identity } from '../utils'
 
 /*
  * config: {
+ *   name,
+ *   payload,
  *   method: 'get'
  *   serialize: identity,
  *   executor: global.fetch,
+ *   prepareExecutor: fn,
  *   onSuccess: noop,
  *   onError: noop,
  * }
@@ -16,6 +19,8 @@ export const createRequestMiddleware = config => ({
   if (action.type !== requestActions.fetchStart.type) {
     return next(action)
   }
+
+  next(action)
 
   const {
     payload: {
@@ -42,17 +47,19 @@ export const createRequestMiddleware = config => ({
 
     resolve(serialized)
 
-    dispatch(requestActions.fetchSuccess({ name, data: serialized }))
+    dispatch(requestActions.fetchSuccess({ name, result: serialized }))
 
     if (config.onSuccess) {
-      config.onSuccess({ name, data: serialized })
+      config.onSuccess({ name, result: serialized })
     }
 
     return serialized
   } catch (error) {
     reject(error)
 
-    dispatch(requestActions.fetchFail({ name, error }))
+    const { message, stack } = error
+
+    dispatch(requestActions.fetchFail({ name, error: message, stack }))
 
     if (config.onError) {
       config.onError({ name, error })

@@ -10,7 +10,7 @@ export function createStore(options) {
 
   if (reduxPersist) {
     const { persistReducer } = require('redux-persist')
-    const defaultStorage = require('redux-persist/lib/storage')
+    const defaultStorage = require('redux-persist/lib/storage').default
 
     const { storage = defaultStorage } = reduxPersist
 

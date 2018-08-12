@@ -1,9 +1,23 @@
 import React, { Component } from 'react'
-import { RestMutation } from './Mutation'
+import { RestMutation } from './MutationContainer'
 
 export const restMutation = config => WrappedComponent => {
   let lastResultProps
-  const { query, options } = config
+  const {
+    // This properties will be passed to the request middleware
+    name,
+    method = 'post',
+    serialize,
+    executor,
+    prepareExecutor,
+
+    // `query` object will be merged with properties above
+    query,
+
+    // `options` fn creates an object using `ownProps` that
+    // will be merged with properties above
+    options,
+  } = config
 
   class RestMutationHoc extends Component {
     applyProps = fn => {
@@ -16,7 +30,11 @@ export const restMutation = config => WrappedComponent => {
 
     render() {
       config.query = {
-        name: config.name,
+        name,
+        method,
+        serialize,
+        executor,
+        prepareExecutor,
         ...query,
         ...this.applyProps(options),
       }
@@ -26,12 +44,12 @@ export const restMutation = config => WrappedComponent => {
           {(mutate, r) => {
             const result = { mutate, ...r }
 
-            const name = config.name || 'data'
-            let childProps = { [name]: result }
+            const propName = config.name || 'data'
+            let childProps = { [propName]: result }
 
             if (config.props) {
               const newResult = {
-                [name]: result,
+                [propName]: result,
                 ownProps: this.props,
               }
 

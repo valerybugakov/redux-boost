@@ -1,29 +1,29 @@
 import { Component } from 'react'
-import PropTypes from 'prop-types'
 import { merge } from 'lodash'
 
-import { requestActions } from '../../state/requests/actions'
-
-export class RestMutation extends Component {
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
+export class RestMutationComponent extends Component {
   static defaultProps = {
     query: {},
     options: {},
-    action: requestActions.requestStart,
+  }
+
+  static getDerivedStateFromProps({ requestState }, { entities }) {
+    if (requestState && requestState.result) {
+      return {
+        entities,
+      }
+    }
+
+    return {
+      entities: undefined,
+    }
   }
 
   // eslint-disable-next-line react/sort-comp
   hasMounted = false
 
   state = {
-    loading: false,
-    error: undefined,
-    result: undefined,
-    // TODO: implement networkStatus updates
-    // networkStatus: 'string',
+    entities: undefined,
   }
 
   componentDidMount() {
@@ -36,6 +36,7 @@ export class RestMutation extends Component {
 
   getMutationResult = () => ({
     ...this.state,
+    ...this.props.requestState,
   })
 
   updateState = data => {
@@ -44,12 +45,10 @@ export class RestMutation extends Component {
     }
   }
 
-  runMutation = async options => {
-    const { store } = this.context
-    const { query, action } = this.props
-    const dynamicPayload = options.nativeEvent ? undefined : options
+  runMutation = async (options = {}) => {
+    const { query, fetchStart, action = fetchStart } = this.props
 
-    this.setState({ loading: true })
+    const dynamicPayload = options.nativeEvent ? undefined : options
 
     try {
       const result = await new Promise((resolve, reject) => {
@@ -62,19 +61,13 @@ export class RestMutation extends Component {
         if (requestAction.then) {
           requestAction.then(resp => resolve(resp)).catch(err => reject(err))
         }
-
-        return store.dispatch(requestAction)
       })
 
-      const newState = { loading: false, result }
-
-      this.updateState(newState)
-      return newState
+      this.updateState({
+        entities: result.entities,
+      })
     } catch (error) {
-      const newState = { loading: false, error, result: undefined }
-
-      this.updateState(newState)
-      return newState
+      throw error
     }
   }
 

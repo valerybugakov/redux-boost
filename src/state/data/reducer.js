@@ -17,7 +17,7 @@ const entitiesUpdate = (state, entities) =>
 
 export const dataReducer = createReducer(
   {
-    [requestActions.fetchSuccess]: (state, { data: { entities } = {} }) => {
+    [requestActions.fetchSuccess]: (state, { entities }) => {
       if (entities) {
         return update(state, entitiesUpdate(state, entities))
       }

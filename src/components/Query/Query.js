@@ -1,36 +1,43 @@
 import { Component } from 'react'
-import PropTypes from 'prop-types'
 
-import { requestActions } from '../../state/requests/actions'
-
-export class RestQuery extends Component {
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
+export class RestQueryComponent extends Component {
   static defaultProps = {
     query: {},
     options: {},
-    action: requestActions.requestStart,
+  }
+
+  static getDerivedStateFromProps({ requestState }, { entities }) {
+    if (requestState && requestState.result) {
+      return {
+        entities,
+      }
+    }
+
+    return {
+      entities: undefined,
+    }
   }
 
   // eslint-disable-next-line react/sort-comp
   hasMounted = false
 
   state = {
-    loading:
-      typeof this.props.shouldSkip !== 'undefined'
-        ? !this.props.shouldSkip
-        : true,
-    error: undefined,
-    result: undefined,
-    // TODO: implement networkStatus updates
-    // networkStatus: 'string',
+    entities: undefined,
   }
 
   componentDidMount() {
     this.fetchData()
     this.hasMounted = true
+  }
+
+  componentDidUpdate({ query }) {
+    const queryUpdated = Object.keys(query).some(
+      key => query[key] !== this.props.query[key]
+    )
+
+    if (queryUpdated) {
+      this.fetchData()
+    }
   }
 
   componentWillUnmount() {
@@ -40,6 +47,7 @@ export class RestQuery extends Component {
   getQueryResult = () => ({
     fetchData: this.fetchData,
     ...this.state,
+    ...this.props.requestState,
   })
 
   updateState = data => {
@@ -51,9 +59,7 @@ export class RestQuery extends Component {
   fetchData = async () => {
     if (this.props.shouldSkip) return null
 
-    const { store } = this.context
-    const { query, action } = this.props
-    this.setState({ loading: true })
+    const { query, fetchStart, action = fetchStart } = this.props
 
     try {
       const result = await new Promise((resolve, reject) => {
@@ -66,27 +72,22 @@ export class RestQuery extends Component {
         if (requestAction.then) {
           requestAction.then(resp => resolve(resp)).catch(err => reject(err))
         }
-
-        return store.dispatch(requestAction)
       })
 
       this.updateState({
-        result,
-        loading: false,
         entities: result.entities,
       })
 
       return result
     } catch (error) {
-      this.updateState({ loading: false, error, result: undefined })
-
-      return null
+      throw error
     }
   }
 
   render() {
     const { children } = this.props
     const queryResult = this.getQueryResult()
+
     return children(queryResult)
   }
 }

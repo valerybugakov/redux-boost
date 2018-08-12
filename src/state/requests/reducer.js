@@ -6,11 +6,11 @@ const initialState = {
   errors: [],
 }
 
-const defaultRequestState = {
+export const defaultRequestState = {
   loading: false,
   success: false,
-  data: undefined,
   result: undefined,
+  data: undefined,
   error: undefined,
 }
 
@@ -25,7 +25,7 @@ export const requestsReducer = createReducer(
       }),
 
     [requestActions.fetchSuccess]: (state, payload) => {
-      const { name, data: { result, ...data } = {} } = payload
+      const { name, data, result } = payload
 
       if (name) {
         return update(state, {
@@ -33,8 +33,8 @@ export const requestsReducer = createReducer(
             [name]: {
               ...defaultRequestState,
               success: true,
-              data,
               result,
+              data,
             },
           },
         })
@@ -61,6 +61,21 @@ export const requestsReducer = createReducer(
           loading: false,
         },
       }),
+
+    [requestActions.resetRequests]: (state, names) =>
+      merge(
+        state,
+        names.reduce((acc, name) => {
+          acc[name] = {
+            error: undefined,
+            data: undefined,
+            success: undefined,
+            loading: false,
+          }
+
+          return acc
+        }, {})
+      ),
   },
   initialState
 )

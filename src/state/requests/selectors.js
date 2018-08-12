@@ -5,6 +5,12 @@ export const getOperationName = (_, { operation } = {}) => operation
 
 export const getRequests = state => state.requests
 
+export const getRequest = createSelector(
+  getRequests,
+  getOperationName,
+  (requests, operation) => requests[operation]
+)
+
 export const getResponse = createSelector(
   [getRequests, getOperationName],
   (requests, operation) => get(requests, `${operation}.data`)

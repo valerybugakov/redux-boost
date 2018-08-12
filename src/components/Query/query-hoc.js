@@ -1,9 +1,29 @@
 import React, { Component } from 'react'
-import { RestQuery } from './Query'
+import { RestQuery } from './QueryContainer'
 
 export const restQuery = config => WrappedComponent => {
   let lastResultProps
-  const { query, options, skip, placeholder: Placeholder } = config
+  const {
+    // This properties will be passed to the request middleware
+    name,
+    method,
+    serialize,
+    executor,
+    prepareExecutor,
+
+    // `query` object will be merged with properties above
+    query,
+
+    // `options` fn creates an object using `ownProps` that
+    // will be merged with properties above
+    options,
+
+    // Allows to bypass request and config processing using `ownProps`
+    skip,
+
+    // The component to render while data is loading
+    placeholder: Placeholder,
+  } = config
 
   class RestQueryHoc extends Component {
     applyProps = fn => {
@@ -17,6 +37,11 @@ export const restQuery = config => WrappedComponent => {
     render() {
       if (options) {
         config.query = {
+          name,
+          method,
+          serialize,
+          executor,
+          prepareExecutor,
           ...query,
           ...this.applyProps(options),
         }
@@ -29,12 +54,12 @@ export const restQuery = config => WrappedComponent => {
       return (
         <RestQuery {...config} {...this.props}>
           {result => {
-            const name = config.name || 'data'
-            let childProps = { [name]: result }
+            const propName = config.name || 'data'
+            let childProps = { [propName]: result }
 
             if (config.props) {
               const newResult = {
-                [name]: result,
+                [propName]: result,
                 ownProps: this.props,
               }
 
