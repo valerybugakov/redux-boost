@@ -4,8 +4,8 @@ Save me from Redux anxiety!
 
 ## TODO:
 
-- [ ] Add API reference
-- [ ] Add interactive example
+- [x] Add [interactive example](https://codesandbox.io/s/3rqv2q3695)
+- [ ] Add API reference (WIP)
 
 ## Usage
 
