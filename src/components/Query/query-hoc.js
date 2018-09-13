@@ -36,17 +36,15 @@ export const restQuery = config => WrappedComponent => {
     }
 
     render() {
-      if (options) {
-        config.query = {
-          name,
-          method,
-          payload,
-          serialize,
-          executor,
-          prepareExecutor,
-          ...query,
-          ...this.applyProps(options),
-        }
+      config.query = {
+        name,
+        method,
+        payload,
+        serialize,
+        executor,
+        prepareExecutor,
+        ...query,
+        ...this.applyProps(options),
       }
 
       if (skip) {
