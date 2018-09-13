@@ -13,6 +13,7 @@ export const restMutation = config => WrappedComponent => {
 
     // `query` object will be merged with properties above
     query,
+    payload,
 
     // `options` fn creates an object using `ownProps` that
     // will be merged with properties above
@@ -32,6 +33,7 @@ export const restMutation = config => WrappedComponent => {
       config.query = {
         name,
         method,
+        payload,
         serialize,
         executor,
         prepareExecutor,
