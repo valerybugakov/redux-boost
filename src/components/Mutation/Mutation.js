@@ -66,6 +66,8 @@ export class RestMutationComponent extends Component {
       this.updateState({
         entities: result.entities,
       })
+
+      return result
     } catch (error) {
       throw error
     }
