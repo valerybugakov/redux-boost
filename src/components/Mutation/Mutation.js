@@ -4,7 +4,7 @@ import { merge } from 'lodash'
 export class RestMutationComponent extends Component {
   static defaultProps = {
     query: {},
-    options: {},
+    options: v => v,
   }
 
   static getDerivedStateFromProps({ requestState }, { entities }) {
@@ -45,10 +45,10 @@ export class RestMutationComponent extends Component {
     }
   }
 
-  runMutation = async (options = {}) => {
-    const { query, fetchStart, action = fetchStart } = this.props
+  runMutation = async (payload = {}) => {
+    const { query, fetchStart, options, action = fetchStart } = this.props
 
-    const dynamicPayload = options.nativeEvent ? undefined : options
+    const dynamicPayload = payload.nativeEvent ? undefined : options(payload)
 
     try {
       const result = await new Promise((resolve, reject) => {

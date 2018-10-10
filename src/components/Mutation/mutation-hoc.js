@@ -15,7 +15,7 @@ export const restMutation = config => WrappedComponent => {
     query,
     payload,
 
-    // `options` fn creates an object using `ownProps` that
+    // `options` fn creates an object using `payload` passed to the `mutate`
     // will be merged with properties above
     options,
   } = config
@@ -38,11 +38,10 @@ export const restMutation = config => WrappedComponent => {
         executor,
         prepareExecutor,
         ...query,
-        ...this.applyProps(options),
       }
 
       return (
-        <RestMutation {...config} {...this.props}>
+        <RestMutation options={options} {...config} {...this.props}>
           {(mutate, r) => {
             const result = { mutate, ...r }
 
