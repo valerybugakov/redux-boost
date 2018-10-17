@@ -1,6 +1,6 @@
 {
   "name": "redux-boost",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "license": "MIT",
   "description": "Redux-Boost",
   "main": "lib/index.js",
@@ -79,10 +79,10 @@
     "webpack-cli": "3.1.0"
   },
   "dependencies": {
-    "immutability-helper": "^2.0.0",
-    "lodash.get": "^4.0.0",
-    "redux-yo": "^0.0.27",
-    "reselect": "^3.0.0"
+    "immutability-helper": ">=2.0.0",
+    "lodash.get": ">=4.0.0",
+    "redux-yo": ">=0.0.27",
+    "reselect": ">=3.0.0"
   },
   "peerDependencies": {
     "react": ">=15.0.0",
