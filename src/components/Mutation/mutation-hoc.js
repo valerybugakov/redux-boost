@@ -38,6 +38,7 @@ export const restMutation = config => WrappedComponent => {
         executor,
         prepareExecutor,
         ...query,
+        ...this.applyProps(options),
       }
 
       return (
