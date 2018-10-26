@@ -133,7 +133,7 @@ To make your React component communicate with the store, we need to wrap it with
 
 ```js
 import React from 'react'
-import { restQuery } from 'redux-form'
+import { restQuery } from 'redux-boost'
 
 const FriendList = props => {
   // getFriends prop updates on each request stage: [START, SUCCESS, FAIL]
