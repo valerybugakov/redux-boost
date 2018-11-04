@@ -1,4 +1,5 @@
 import { createReducer } from 'redux-yo'
+
 import { update, merge } from '../utils'
 import { requestActions } from './actions'
 
@@ -10,7 +11,6 @@ export const defaultRequestState = {
   loading: false,
   success: false,
   result: undefined,
-  data: undefined,
   error: undefined,
 }
 
@@ -20,21 +20,23 @@ export const requestsReducer = createReducer(
       merge(state, {
         [name]: {
           ...defaultRequestState,
+          ...state[name],
           loading: true,
         },
       }),
 
     [requestActions.fetchSuccess]: (state, payload) => {
-      const { name, data, result } = payload
+      const { name, result, saveRequestResult } = payload
 
       if (name) {
         return update(state, {
           $merge: {
             [name]: {
               ...defaultRequestState,
+              ...(saveRequestResult && {
+                result,
+              }),
               success: true,
-              result,
-              data,
             },
           },
         })
@@ -47,6 +49,7 @@ export const requestsReducer = createReducer(
       ...state,
       [name]: {
         ...defaultRequestState,
+        data: state[name].data,
         error,
       },
       errors: [error, ...state.errors.slice(0, 4)],
@@ -54,24 +57,14 @@ export const requestsReducer = createReducer(
 
     [requestActions.resetRequest]: (state, name) =>
       merge(state, {
-        [name]: {
-          error: undefined,
-          data: undefined,
-          success: undefined,
-          loading: false,
-        },
+        [name]: defaultRequestState,
       }),
 
     [requestActions.resetRequests]: (state, names) =>
       merge(
         state,
         names.reduce((acc, name) => {
-          acc[name] = {
-            error: undefined,
-            data: undefined,
-            success: undefined,
-            loading: false,
-          }
+          acc[name] = defaultRequestState
 
           return acc
         }, {})

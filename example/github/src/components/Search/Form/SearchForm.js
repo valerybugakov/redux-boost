@@ -17,6 +17,18 @@ class SearchForm extends Component {
   handleSearchUser = () => {
     const { username } = this.state
 
+    // TODO: add working example with `fetchStart` action
+    // this.props.fetchStart({
+    //   name: 'test',
+    //   payload: `https://swapi.co/api/people/${username}`,
+    //   // saveRequestResult: false,
+    //   serialize: resp => {
+    //     console.log('REST', resp)
+    //
+    //     return resp.films
+    //   }
+    // })
+
     if (username.length) {
       this.props.resetRequests(['mutationName'])
       this.props.setUsername(username)

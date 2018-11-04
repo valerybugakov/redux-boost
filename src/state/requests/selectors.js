@@ -11,11 +11,6 @@ export const getRequest = createSelector(
   (requests, operation) => requests[operation]
 )
 
-export const getResponse = createSelector(
-  [getRequests, getOperationName],
-  (requests, operation) => get(requests, `${operation}.data`)
-)
-
 export const getResult = createSelector(
   [getRequests, getOperationName],
   (requests, operation) => get(requests, `${operation}.result`)

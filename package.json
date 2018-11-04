@@ -1,6 +1,6 @@
 {
   "name": "redux-boost",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "license": "MIT",
   "description": "Redux-Boost",
   "main": "lib/index.js",
@@ -15,11 +15,10 @@
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
     "build:umd": "cross-env NODE_ENV=development webpack",
-    "build:umd:min": "cross-env NODE_ENV=production webpack && es-check es5 dist/redux-actions.min.js",
+    "build:umd:min": "cross-env NODE_ENV=production webpack && es-check es5 dist/redux-boost.min.js",
     "build": "run-s clean && run-p build:**",
     "test": "jest",
     "check": "npm-check -u",
-    "example": "node example.js",
     "clean": "rimraf coverage dist es lib",
     "prepublishOnly": "run-s build",
     "pub": "npx np || true"
@@ -50,7 +49,7 @@
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
-    "babel-eslint": "8.0.1",
+    "babel-eslint": "9.0.0",
     "babel-jest": "21.2.0",
     "babel-loader": "7.1.5",
     "babel-plugin-transform-class-properties": "6.24.1",
@@ -73,6 +72,7 @@
     "npm-check": "5.4.5",
     "npm-run-all": "4.1.3",
     "prettier": "1.14.2",
+    "react-redux": "5.1.0",
     "rimraf": "2.6.2",
     "run-sequence": "2.2.0",
     "webpack": "4.16.5",
@@ -87,8 +87,8 @@
   "peerDependencies": {
     "react": ">=15.0.0",
     "react-dom": ">=15.0.0",
-    "redux": ">=3.6.0",
     "react-redux": ">=5.0.0",
+    "redux": ">=3.6.0",
     "reselect": ">=0.0.1"
   },
   "optionalDependencies": {

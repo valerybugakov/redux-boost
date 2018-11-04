@@ -1,6 +1,21 @@
 import { requestActions } from '../requests/actions'
 import { noop, identity } from '../utils'
 
+function applyMethodToExecutor(executor, payload, method) {
+  return executor.get ? executor[method.toLowerCase()] : executor
+}
+
+const defaultConfig = {
+  method: 'get',
+  serialize: identity,
+  executor: global.fetch,
+  prepareExecutor: applyMethodToExecutor,
+  onError: identity,
+  onSuccess: identity,
+  saveRequestResult: true,
+  logError: true,
+}
+
 /*
  * config: {
  *   name,
@@ -13,61 +28,69 @@ import { noop, identity } from '../utils'
  *   onError: noop,
  * }
  */
-export const createRequestMiddleware = config => ({
-  dispatch,
-}) => next => async action => {
-  if (action.type !== requestActions.fetchStart.type) {
-    return next(action)
-  }
+export const createRequestMiddleware = customConfig => ({ dispatch }) => {
+  // Apply default values to the custom config
+  const config = Object.assign(defaultConfig, customConfig)
 
-  next(action)
-
-  const {
-    payload: {
-      name,
-      payload,
-      method = config.method || 'get',
-      serialize = config.serialize || identity,
-      executor = config.executor || global.fetch,
-      prepareExecutor = config.prepareExecutor ||
-        function applyMethod() {
-          return executor.get ? executor[method.toLowerCase()] : executor
-        },
-    } = {},
-    meta: { resolve = noop, reject = noop } = {},
-  } = action
-
-  const args = Array.isArray(payload) ? payload : [payload]
-  const fetch = prepareExecutor(executor, action.payload)
-
-  try {
-    const response = await fetch(...args)
-    const data = response.data || response
-    const serialized = serialize(data)
-
-    resolve(serialized)
-
-    dispatch(requestActions.fetchSuccess({ name, result: serialized }))
-
-    if (config.onSuccess) {
-      config.onSuccess({ name, result: serialized })
+  return next => async action => {
+    // Skip all actions but process `fetchStart`
+    if (action.type !== requestActions.fetchStart.type) {
+      return next(action)
     }
 
-    return serialized
-  } catch (error) {
-    reject(error)
+    next(action)
 
-    const { message, stack } = error
+    const {
+      payload: {
+        name,
+        payload,
+        method = config.method,
+        serialize = config.serialize,
+        executor = config.executor,
+        prepareExecutor = config.prepareExecutor,
+        saveRequestResult = config.saveRequestResult,
+        onError = config.onError,
+        onSuccess = config.onSuccess,
+      } = {},
+      meta: { resolve = noop, reject = noop } = {},
+    } = action
 
-    dispatch(requestActions.fetchFail({ name, error: message, stack }))
+    const args = Array.isArray(payload) ? payload : [payload]
+    const fetch = prepareExecutor(executor, action.payload, method)
 
-    if (config.onError) {
-      config.onError({ name, error })
+    try {
+      const response = await fetch(...args)
+      const data = response.data || response
+      const serialized = serialize(data)
+
+      resolve(serialized)
+
+      dispatch(
+        requestActions.fetchSuccess({
+          name,
+          result: serialized,
+          saveRequestResult,
+        })
+      )
+
+      onSuccess({ name, result: serialized })
+
+      return serialized
+    } catch (error) {
+      reject(error)
+
+      const { message, stack } = error
+
+      dispatch(requestActions.fetchFail({ name, error: message, stack }))
+
+      onError({ name, error })
+
+      if (config.logError) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+      }
+
+      return error
     }
-
-    // eslint-disable-next-line no-console
-    console.error(error)
-
-    return error
   }
 }

@@ -1,4 +1,5 @@
-const accessToken = '3886b49a2e14a3bbb9f75b2a00211de53268729d'
+const token = '3removemef468c9b91a00d81removeme99ed59caed951926637d9e6b'
+const accessToken = token.replace(/removeme/g, '')
 
 const apiUrl = path =>
   `https://api.github.com/${path}access_token=${accessToken}`

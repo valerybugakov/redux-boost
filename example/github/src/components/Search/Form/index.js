@@ -8,6 +8,7 @@ import SearchForm from './SearchForm'
 const mapDispatchToProps = {
   resetRequests: requestActions.resetRequests,
   setUsername: searchFormActions.setUsername,
+  fetchStart: requestActions.fetchStart,
 }
 
 export default connect(
